@@ -4,10 +4,19 @@ import (
 	"fmt"
 
 	"rsc.io/quote"
+
+	"bytes"
+
+	"sync"
 )
 
 type Person struct {
 	age int
+}
+
+type syncedBuffer struct {
+	lock   sync.Mutex
+	buffer bytes.Buffer
 }
 
 func (x Person) Age() int {
@@ -44,4 +53,11 @@ func main() {
 	defer fmt.Println("First defer")
 	defer fmt.Println("Second defer")
 	fmt.Println("Main body")
+
+	s := new(syncedBuffer)
+
+	s.lock.Lock()
+	s.buffer.WriteString("Hello, World! \n")
+	s.lock.Unlock()
+	fmt.Print(s.buffer.String())
 }
