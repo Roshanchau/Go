@@ -60,4 +60,20 @@ func main() {
 	s.buffer.WriteString("Hello, World! \n")
 	s.lock.Unlock()
 	fmt.Print(s.buffer.String())
+
+	var slice *[]int = new([]int) // Allocates memory for the slice's "Table of Contents" (header) and zeros it.
+	// The zeroed header means its internal pointer is nil, length is 0, capacity is 0.
+
+	fmt.Println(slice) // Output: 0x... (a memory address, because it's a pointer)
+	fmt.Println(*slice)
+
+	var v []int = make([]int, 10, 100)
+
+	fmt.Println(v)
+	fmt.Println(len(v))
+	fmt.Println(cap(v))
+
+	v[0] = 1
+	v[9] = 10
+	fmt.Println(v)
 }
